@@ -1,0 +1,20 @@
+﻿<Window x:Class="HIVTreatment_PRN.Login.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HIVTreatment_PRN.Login"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="300" Width="700" FontFamily="Arial" FontSize="24" Background="#FFBAE6FD" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel>
+            <Label Content="Tài khoản" FontSize="26" Foreground="#FF1E3A8A"/>
+            <TextBox x:Name="txtname_or_email" Height="34" Background="#FFF0F9FF"/>
+            <Label Content="Mật khẩu" FontSize="26" Foreground="#FF1E3A8A"/>
+            <TextBox x:Name="txtpassword" Height="34" Background="#FFF0F9FF"/>
+            <Button Content="Login" x:Name="btnLogin"
+                    Padding="10" Click="btnLogin_Click"  Background="#FF06B6D4" Foreground="#FFFFFFFF" />
+            <TextBlock x:Name="ErrorText" Foreground="Red" />
+        </StackPanel>
+    </Grid>
+</Window>
