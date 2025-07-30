@@ -5,8 +5,353 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HIVTreatment_PRN.Staff"
         mc:Ignorable="d"
-        Title="StaffWindow" Height="450" Width="800">
-    <Grid>
-        
+          Title="Quản lý ARV và Protocol" Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen" 
+        Background="#F0F4F8">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="White" CornerRadius="10" 
+                Padding="20" Margin="0,0,0,15"
+                BorderBrush="#E1E8ED" BorderThickness="1">
+            <StackPanel>
+                <TextBlock Text="Hệ thống quản lý ARV và Protocol" 
+                          FontSize="24" FontWeight="Bold" 
+                          Foreground="#1A202C" HorizontalAlignment="Center"/>
+                <TextBlock Text="Quản lý thuốc ARV và các giao thức điều trị HIV" 
+                          FontSize="14" Foreground="#718096" 
+                          HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" FontFamily="Segoe UI" FontSize="14" 
+                    Background="Transparent" BorderThickness="0">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" 
+                                        Background="#E2E8F0" 
+                                        BorderBrush="#CBD5E0" 
+                                        BorderThickness="1,1,1,0" 
+                                        CornerRadius="8,8,0,0" 
+                                        Margin="2,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    ContentSource="Header"
+                                                    Margin="15,10"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="White"/>
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="#3182CE"/>
+                                        <Setter Property="Foreground" Value="#3182CE"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="#F7FAFC"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+
+            <!-- ARV Management Tab -->
+            <TabItem Header="🧬 Quản lý ARV" FontSize="16">
+                <Border Background="White" CornerRadius="0,10,10,10" 
+                        BorderBrush="#E1E8ED" BorderThickness="1" Padding="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Title -->
+                        <TextBlock Grid.Row="0" Text="Danh sách thuốc ARV" 
+                                  FontSize="18" FontWeight="SemiBold" 
+                                  Foreground="#2D3748" Margin="0,0,0,15"/>
+
+                        <!-- Action Buttons -->
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,15">
+                            <Button Content="➕ Thêm ARV" Width="140" Height="40" 
+                                   Margin="0,0,10,0" Click="AddArv_Click"
+                                   Style="{DynamicResource PrimaryButtonStyle}"/>
+                            <Button Content="✏️ Sửa ARV" Width="130" Height="40" 
+                                   Margin="0,0,10,0" Click="EditArv_Click"
+                                   Style="{DynamicResource SecondaryButtonStyle}"/>
+                            <Button Content="🗑️ Xóa ARV" Width="130" Height="40" 
+                                   Margin="0,0,10,0" Click="DeleteArv_Click"
+                                   Style="{DynamicResource DangerButtonStyle}"/>
+                            <Button Content="🔄 Làm mới" Width="130" Height="40" 
+                                   Click="RefreshArv_Click"
+                                   Style="{DynamicResource SuccessButtonStyle}"/>
+                        </StackPanel>
+
+                        <!-- ARV DataGrid -->
+                        <Border Grid.Row="2" BorderBrush="#E1E8ED" BorderThickness="1" 
+                               CornerRadius="8" Background="White">
+                            <DataGrid x:Name="ArvGrid" AutoGenerateColumns="False" 
+                                     SelectionMode="Single" CanUserAddRows="False"
+                                     GridLinesVisibility="Horizontal" 
+                                     HeadersVisibility="Column"
+                                     AlternatingRowBackground="#F8FAFC"
+                                     RowHeight="45">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding ArvId}" 
+                                                       Width="80" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Tên ARV" Binding="{Binding Name}" 
+                                                       Width="200"/>
+                                    <DataGridTextColumn Header="Mô tả" Binding="{Binding Description}" 
+                                                       Width="*"/>
+                                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" 
+                                                       Width="120"/>
+                                </DataGrid.Columns>
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#F7FAFC"/>
+                                        <Setter Property="Foreground" Value="#2D3748"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                        <Setter Property="BorderBrush" Value="#E1E8ED"/>
+                                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+                            </DataGrid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </TabItem>
+
+            <!-- Protocol Management Tab -->
+            <TabItem Header="📋 Quản lý Protocol" FontSize="16">
+                <Border Background="White" CornerRadius="0,10,10,10" 
+                        BorderBrush="#E1E8ED" BorderThickness="1" Padding="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Title -->
+                        <TextBlock Grid.Row="0" Text="Danh sách giao thức điều trị" 
+                                  FontSize="18" FontWeight="SemiBold" 
+                                  Foreground="#2D3748" Margin="0,0,0,15"/>
+
+                        <!-- Action Buttons -->
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,15">
+                            <Button Content="➕ Thêm Protocol" Width="160" Height="40" 
+                                   Margin="0,0,10,0" Click="AddProtocol_Click"
+                                   Style="{DynamicResource PrimaryButtonStyle}"/>
+                            <Button Content="✏️ Sửa Protocol" Width="140" Height="40" 
+                                   Margin="0,0,10,0" Click="EditProtocol_Click"
+                                   Style="{DynamicResource SecondaryButtonStyle}"/>
+                            <Button Content="🗑️ Xóa Protocol" Width="140" Height="40" 
+                                   Margin="0,0,10,0" Click="DeleteProtocol_Click"
+                                   Style="{DynamicResource DangerButtonStyle}"/>
+                            <Button Content="🔄 Làm mới" Width="130" Height="40" 
+                                   Click="RefreshProtocol_Click"
+                                   Style="{DynamicResource SuccessButtonStyle}"/>
+                        </StackPanel>
+
+                        <!-- Protocol DataGrid -->
+                        <Border Grid.Row="2" BorderBrush="#E1E8ED" BorderThickness="1" 
+                               CornerRadius="8" Background="White">
+                            <DataGrid x:Name="ProtocolGrid" AutoGenerateColumns="False" 
+                                     SelectionMode="Single" CanUserAddRows="False"
+                                     GridLinesVisibility="Horizontal" 
+                                     HeadersVisibility="Column"
+                                     AlternatingRowBackground="#F8FAFC"
+                                     RowHeight="45">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding ProtocolId}" 
+                                                       Width="80" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Tên Protocol" Binding="{Binding Name}" 
+                                                       Width="250"/>
+                                    <DataGridTextColumn Header="Mô tả" Binding="{Binding Description}" 
+                                                       Width="*"/>
+                                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" 
+                                                       Width="120"/>
+                                    <DataGridTemplateColumn Header="Thao tác" Width="150">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="👁️ Xem chi tiết" 
+                                                       Click="ViewProtocolDetail_Click"
+                                                       Style="{DynamicResource InfoButtonStyle}"
+                                                       Height="30" Padding="8,4"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#F7FAFC"/>
+                                        <Setter Property="Foreground" Value="#2D3748"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                        <Setter Property="BorderBrush" Value="#E1E8ED"/>
+                                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+                            </DataGrid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </TabItem>
+        </TabControl>
     </Grid>
+
+    <Window.Resources>
+        <!-- Primary Button Style -->
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3182CE"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="6" Padding="15,8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C5282"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2A4365"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Secondary Button Style -->
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#ED8936"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="6" Padding="15,8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#DD6B20"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#C05621"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Danger Button Style -->
+        <Style x:Key="DangerButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E53E3E"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="6" Padding="15,8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C53030"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#9C1A1A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Success Button Style -->
+        <Style x:Key="SuccessButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#38A169"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="6" Padding="15,8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2F855A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#276749"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Info Button Style -->
+        <Style x:Key="InfoButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3182CE"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C5282"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2A4365"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 </Window>

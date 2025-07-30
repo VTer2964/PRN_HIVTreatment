@@ -25,18 +25,17 @@ namespace HIVTreatment_PRN.Login
     public partial class LoginWindow : Window
     {
         private readonly LoginSer _loginService;
-        private readonly AccountRepo accountRepo;
 
         public LoginWindow()
         {
             InitializeComponent();
-            _loginService = new LoginSer();
+            _loginService = new LoginSer();;
         }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string input = txtname_or_email.Text;
-            string password = txtpassword.Text;
+            string password = txtpassword.Password;
 
             // Gọi login
             Account? account = await _loginService.UserLogin(input, password);
@@ -48,10 +47,10 @@ namespace HIVTreatment_PRN.Login
             }
 
             // Lấy role
-            string? role = accountRepo.getRoleAccount(account);
+            string? role = account.User?.Role;
 
             // Phân quyền chuyển form
-            switch (role?.ToLower())
+            switch (role)
             {
                 case "Patient":
                     new PatientWindow().Show();

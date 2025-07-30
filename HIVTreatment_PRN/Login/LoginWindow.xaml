@@ -5,16 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HIVTreatment_PRN.Login"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="300" Width="700" FontFamily="Arial" FontSize="24" Background="#FFBAE6FD" WindowStartupLocation="CenterScreen">
+         Title="Đăng nhập hệ thống" Height="400" Width="500"
+        Background="#E0F7FA" FontFamily="Segoe UI" FontSize="18"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
-        <StackPanel>
-            <Label Content="Tài khoản" FontSize="26" Foreground="#FF1E3A8A"/>
-            <TextBox x:Name="txtname_or_email" Height="34" Background="#FFF0F9FF"/>
-            <Label Content="Mật khẩu" FontSize="26" Foreground="#FF1E3A8A"/>
-            <TextBox x:Name="txtpassword" Height="34" Background="#FFF0F9FF"/>
-            <Button Content="Login" x:Name="btnLogin"
-                    Padding="10" Click="btnLogin_Click"  Background="#FF06B6D4" Foreground="#FFFFFFFF" />
-            <TextBlock x:Name="ErrorText" Foreground="Red" />
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="497*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Border Background="White" CornerRadius="15" Padding="30" Margin="45,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" >
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" >
+
+                <TextBlock Text="Đăng nhập" FontSize="32" FontWeight="Bold" Foreground="#0077B6" Margin="0,0,0,20" TextAlignment="Center"/>
+
+                <TextBlock Text="Tài khoản hoặc Email:" Margin="0,5,0,5" Foreground="#333"/>
+                <TextBox x:Name="txtname_or_email" Height="35" Background="#F0F9FF" BorderBrush="#90CAF9" BorderThickness="1" />
+
+                <TextBlock Text="Mật khẩu:" Margin="10,15,0,5" Foreground="#333"/>
+                <PasswordBox x:Name="txtpassword" Height="35" Background="#F0F9FF" BorderBrush="#90CAF9" BorderThickness="1" />
+
+                <Button Content="Đăng nhập" x:Name="btnLogin"
+                        Margin="0,25,0,10"
+                        Height="40"
+                        Background="#0288D1"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Click="btnLogin_Click"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        />
+
+                <TextBlock x:Name="ErrorText" Foreground="Red" TextAlignment="Center" FontSize="14" />
+
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

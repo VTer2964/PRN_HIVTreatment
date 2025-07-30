@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{3FE0AFA7-4EEC-4C02-94C3-AB9118A894B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDAppointment", "..\..\..\SWT301\Appointment\CRUDAppointment\CRUDAppointment.csproj", "{58B1309A-9167-A873-B0DB-FCDC4255859F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{3FE0AFA7-4EEC-4C02-94C3-AB9118A894B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FE0AFA7-4EEC-4C02-94C3-AB9118A894B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FE0AFA7-4EEC-4C02-94C3-AB9118A894B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58B1309A-9167-A873-B0DB-FCDC4255859F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58B1309A-9167-A873-B0DB-FCDC4255859F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58B1309A-9167-A873-B0DB-FCDC4255859F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58B1309A-9167-A873-B0DB-FCDC4255859F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
