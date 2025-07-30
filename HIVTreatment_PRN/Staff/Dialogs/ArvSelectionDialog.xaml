@@ -1,0 +1,106 @@
+﻿<Window x:Class="HIVTreatment_PRN.Staff.Dialogs.ArvSelectionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HIVTreatment_PRN.Staff.Dialogs"
+        mc:Ignorable="d"
+        Title="Chọn ARV cho Protocol" Height="650" Width="500"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid Background="#F8F9FA" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Thêm ARV vào Protocol" 
+                   FontSize="18" FontWeight="Bold" 
+                   Foreground="#2C3E50" Margin="0,0,0,20"
+                   HorizontalAlignment="Center"/>
+
+        <!-- Form -->
+        <Border Grid.Row="1" Background="White" CornerRadius="8" 
+                Padding="20" BorderBrush="#E1E5E9" BorderThickness="1">
+            <StackPanel>
+                <!-- ARV Selection -->
+                <TextBlock Text="Chọn ARV:" FontWeight="SemiBold" 
+                          Margin="0,0,0,5" Foreground="#34495E"/>
+                <ComboBox x:Name="cmbArv" Height="35" Margin="0,0,0,15"
+                         DisplayMemberPath="Name" SelectedValuePath="ArvId"
+                         FontSize="14" SelectionChanged="CmbArv_SelectionChanged"/>
+
+                <!-- ARV Description (Read-only) -->
+                <TextBlock Text="Mô tả ARV:" FontWeight="SemiBold" 
+                          Margin="0,0,0,5" Foreground="#34495E"/>
+                <TextBox x:Name="txtArvDescription" Height="50" Margin="0,0,0,15"
+                        FontSize="12" Padding="8,5" IsReadOnly="True"
+                        Background="#F8F9FA" TextWrapping="Wrap"/>
+
+                <!-- Dosage -->
+                <TextBlock Text="Liều lượng:" FontWeight="SemiBold" 
+                          Margin="0,0,0,5" Foreground="#34495E"/>
+                <TextBox x:Name="txtDosage" Height="35" Margin="0,0,0,15"
+                        FontSize="14" Padding="10,5"
+                        Text="Nhập liều lượng..." Foreground="Gray"
+                        GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+
+                <!-- Usage Instruction -->
+                <TextBlock Text="Hướng dẫn sử dụng:" FontWeight="SemiBold" 
+                          Margin="0,0,0,5" Foreground="#34495E"/>
+                <TextBox x:Name="txtUsageInstruction" Height="80" 
+                        Margin="0,0,0,15" TextWrapping="Wrap" 
+                        AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                        FontSize="14" Padding="10,5"
+                        Text="Nhập hướng dẫn sử dụng..." Foreground="Gray"
+                        GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+
+                <!-- Status -->
+                <TextBlock Text="Trạng thái:" FontWeight="SemiBold" 
+                          Margin="0,0,0,5" Foreground="#34495E"/>
+                <ComboBox x:Name="cmbStatus" Height="35" 
+                         FontSize="14" SelectedIndex="0">
+                    <ComboBoxItem Content="Active"/>
+                    <ComboBoxItem Content="Inactive"/>
+                </ComboBox>
+            </StackPanel>
+        </Border>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" 
+                   HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Thêm" Width="100" Height="35" 
+                   Margin="0,0,10,0" Click="Add_Click"
+                   Background="#27AE60" Foreground="White"
+                   Style="{DynamicResource RoundedButtonStyle}"/>
+            <Button Content="Hủy" Width="100" Height="35" 
+                   Click="Cancel_Click"
+                   Background="#95A5A6" Foreground="White"
+                   Style="{DynamicResource RoundedButtonStyle}"/>
+        </StackPanel>
+    </Grid>
+
+    <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+</Window>

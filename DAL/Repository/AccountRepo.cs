@@ -18,8 +18,8 @@ namespace DAL.Repository
         // Login
         public async Task<Account?> UserLogin(string name_or_email, string password)
         {
-            return await _context.Accounts.FirstOrDefaultAsync(u => (u.Email == name_or_email || u.Username == name_or_email)
-                                                                 && u.PasswordHash == password);
+            return await _context.Accounts.Include(a => a.User).FirstOrDefaultAsync
+                (u => (u.Email == name_or_email || u.Username == name_or_email) && u.PasswordHash == password);
         }
         // lấy role account
         public string? getRoleAccount(Account a) => a.User?.Role;
