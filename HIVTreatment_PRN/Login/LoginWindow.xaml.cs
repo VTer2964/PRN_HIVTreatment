@@ -56,7 +56,7 @@ namespace HIVTreatment_PRN.Login
                     new PatientWindow().Show();
                     break;
                 case "Doctor":
-                   new DoctorWindow().Show();
+                    new DoctorWindow(account.User!).Show();
                     break;
                 case "Staff":
                     new StaffWindow().Show();
