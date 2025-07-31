@@ -10,47 +10,28 @@ namespace DAL.Repository
 {
     public class CustomizedArvProtocolRepository
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _context = new();
 
-        public CustomizedArvProtocolRepository() => _context = new AppDbContext();
-
-        public List<CustomizedArvProtocol> GetByDoctorId(int doctorId)
+        public CustomizedArvProtocol? GetCurrentByPatientId(int patientId)
         {
             return _context.CustomizedArvProtocols
                 .Include(p => p.CustomizedArvProtocolDetails)
-                .ThenInclude(d => d.Arv)
-                .Where(p => p.DoctorId == doctorId)
+                    .ThenInclude(d => d.Arv)
+                .FirstOrDefault(p => p.PatientId == patientId && p.Status == "Active");
+        }
+
+        public void AssignNewProtocol(CustomizedArvProtocol protocol)
+        {
+            // Hủy kích hoạt các phác đồ cũ
+            var oldProtocols = _context.CustomizedArvProtocols
+                .Where(p => p.PatientId == protocol.PatientId && p.Status == "Active")
                 .ToList();
-        }
 
-        public CustomizedArvProtocol? GetById(int id)
-        {
-            return _context.CustomizedArvProtocols
-                .Include(p => p.CustomizedArvProtocolDetails)
-                .ThenInclude(d => d.Arv)
-                .FirstOrDefault(p => p.CustomProtocolId == id);
-        }
+            foreach (var old in oldProtocols)
+                old.Status = "Inactive";
 
-        public void Add(CustomizedArvProtocol protocol)
-        {
             _context.CustomizedArvProtocols.Add(protocol);
             _context.SaveChanges();
-        }
-
-        public void Update(CustomizedArvProtocol protocol)
-        {
-            _context.CustomizedArvProtocols.Update(protocol);
-            _context.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var entity = _context.CustomizedArvProtocols.Find(id);
-            if (entity != null)
-            {
-                _context.CustomizedArvProtocols.Remove(entity);
-                _context.SaveChanges();
-            }
         }
     }
 }

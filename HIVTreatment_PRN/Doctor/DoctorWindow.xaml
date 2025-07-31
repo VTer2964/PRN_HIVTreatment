@@ -5,8 +5,270 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HIVTreatment_PRN.Doctor"
         mc:Ignorable="d"
-        Title="DoctorWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Bác sĩ - Quản lý bệnh nhân" Height="800" Width="1200"
+        WindowStartupLocation="CenterScreen" 
+        Background="#F0F4F8">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="White" CornerRadius="10" 
+                Padding="20" Margin="0,0,0,15"
+                BorderBrush="#E1E8ED" BorderThickness="1">
+            <StackPanel>
+                <TextBlock x:Name="txtWelcome" Text="Chào bác sĩ [Tên]" 
+                          FontSize="24" FontWeight="Bold" 
+                          Foreground="#1A202C" HorizontalAlignment="Center"/>
+                <TextBlock Text="Quản lý thông tin bệnh nhân và phác đồ điều trị" 
+                          FontSize="14" Foreground="#718096" 
+                          HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" FontFamily="Segoe UI" FontSize="14" 
+                    Background="Transparent" BorderThickness="0">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" 
+                                        Background="#E2E8F0" 
+                                        BorderBrush="#CBD5E0" 
+                                        BorderThickness="1,1,1,0" 
+                                        CornerRadius="8,8,0,0" 
+                                        Margin="2,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    ContentSource="Header"
+                                                    Margin="15,10"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="White"/>
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="#3182CE"/>
+                                        <Setter Property="Foreground" Value="#3182CE"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="#F7FAFC"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+
+            <!-- Patient Dashboard Tab -->
+            <TabItem Header="🏠 Trang chủ" FontSize="16">
+                <Border Background="White" CornerRadius="0,10,10,10" 
+                        BorderBrush="#E1E8ED" BorderThickness="1" Padding="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Patient Selection -->
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+                            <TextBlock Text="Chọn bệnh nhân:" 
+                                      VerticalAlignment="Center" 
+                                      Margin="0,0,10,0"/>
+                            <ComboBox x:Name="cbPatients" Width="300" 
+                                     DisplayMemberPath="FullName"
+                                     SelectedValuePath="UserId"
+                                    SelectionChanged="cbPatients_SelectionChanged"/>
+                        </StackPanel>
+
+                        <!-- Latest Examination Results -->
+                        <Border Grid.Row="1" BorderBrush="#E1E8ED" BorderThickness="1" 
+                               CornerRadius="8" Background="White" Padding="15" Margin="0,0,0,15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="KẾT QUẢ XÉT NGHIỆM GẦN NHẤT" 
+                                          FontSize="16" FontWeight="SemiBold" 
+                                          Foreground="#3182CE" Margin="0,0,0,10"/>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,10,0">
+                                        <TextBlock Text="CD4 Count:" FontWeight="SemiBold"/>
+                                        <TextBlock x:Name="txtCD4" Text="N/A" Margin="0,5,0,0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10,0,10,0">
+                                        <TextBlock Text="HIV Load:" FontWeight="SemiBold"/>
+                                        <TextBlock x:Name="txtHIVLoad" Text="N/A" Margin="0,5,0,0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10,0,0,0">
+                                        <TextBlock Text="Ngày xét nghiệm:" FontWeight="SemiBold"/>
+                                        <TextBlock x:Name="txtExamDate" Text="N/A" Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10,0,0,0">
+                                        <TextBlock Text="Kết quả tổng quát:" FontWeight="Bold" />
+                                        <TextBlock x:Name="txtResult" Text="N/A" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                    </StackPanel>
+
+                                </Grid>
+
+                                <Button Grid.Row="2" Content="Nhập kết quả xét nghiệm mới" 
+                                       HorizontalAlignment="Right" Margin="0,10,0,0"
+                                       Width="200" Click="BtnAddExam_Click"
+                                       Style="{DynamicResource PrimaryButtonStyle}"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Current Protocol Section -->
+                        <Border Grid.Row="2" BorderBrush="#E1E8ED" BorderThickness="1" 
+                               CornerRadius="8" Background="White" Padding="15" Margin="0,0,0,15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Vertical">
+                                    <TextBlock Text="PHÁC ĐỒ HIỆN TẠI" 
+                                                      FontSize="16" FontWeight="SemiBold" 
+                                                      Foreground="#3182CE"/>        
+                                    <TextBlock x:Name="txtProtocolName" FontWeight="Bold" Margin="0,5,0,0"/>
+                                    <TextBlock x:Name="txtProtocolDesc" TextWrapping="Wrap" Margin="0,2,0,10"/>
+                                </StackPanel>
+
+                                <DataGrid Grid.Row="1" x:Name="dgCurrentProtocol" 
+                                         AutoGenerateColumns="False" CanUserAddRows="False"
+                                         HeadersVisibility="Column" RowHeight="35"
+                                         AlternatingRowBackground="#F8FAFC"
+                                         Margin="0,10,0,0">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Thuốc ARV" Binding="{Binding Arv.Name}" Width="*"/>
+                                        <DataGridTextColumn Header="Liều lượng" Binding="{Binding Dosage}" Width="150"/>
+                                        <DataGridTextColumn Header="Hướng dẫn" Binding="{Binding UsageInstruction}" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <Button Grid.Row="2" Content="Chuyển phác đồ" 
+                                       HorizontalAlignment="Right" Margin="0,10,0,0"
+                                       Width="150" Click="BtnChangeProtocol_Click"
+                                       Style="{DynamicResource SecondaryButtonStyle}"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Examination History -->
+                        <Border Grid.Row="3" BorderBrush="#E1E8ED" BorderThickness="1" 
+                               CornerRadius="8" Background="White">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="LỊCH SỬ XÉT NGHIỆM" 
+                                          FontSize="16" FontWeight="SemiBold" 
+                                          Foreground="#3182CE" Margin="10,10,10,10"/>
+
+                                <DataGrid x:Name="dgExamHistory" Grid.Row="1" AutoGenerateColumns="False" 
+                                         SelectionMode="Single" CanUserAddRows="False"
+                                         GridLinesVisibility="Horizontal" 
+                                         HeadersVisibility="Column"
+                                         AlternatingRowBackground="#F8FAFC"
+                                         RowHeight="35">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Ngày" Binding="{Binding ExamDate, StringFormat='dd/MM/yyyy'}" 
+                                                           Width="120"/>
+                                        <DataGridTextColumn Header="CD4 Count" Binding="{Binding Cd4Count}" 
+                                                           Width="100"/>
+                                        <DataGridTextColumn Header="HIV Load" Binding="{Binding HivLoad}" 
+                                                           Width="100"/>
+                                        <DataGridTextColumn Header="Kết quả" Binding="{Binding Result}" 
+                                                           Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </TabItem>
+        </TabControl>
     </Grid>
+
+    <Window.Resources>
+        <!-- Primary Button Style -->
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3182CE"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="6" Padding="15,8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C5282"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2A4365"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Secondary Button Style -->
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#ED8936"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                               CornerRadius="6" Padding="15,8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#DD6B20"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#C05621"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 </Window>
